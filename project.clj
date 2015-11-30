@@ -4,17 +4,20 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [ring-server "0.4.0"]
                  [reagent "0.5.1"
                   :exclusions [org.clojure/tools.reader]]
                  [reagent-forms "0.5.13"]
                  [reagent-utils "0.1.5"]
+                 [com.cognitect/transit-clj "0.8.285"]
+                 [com.cognitect/transit-cljs "0.8.232"]
+                 [com.datomic/datomic-pro "0.9.5327"
+                  :exclusions [joda-time]]
+                 [com.taoensso/sente "1.6.0"]
+                 [http-kit "2.1.18"]
                  [ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
-                 [cljs-uuid "0.0.4"]
                  [prone "0.8.2"]
                  [compojure "1.4.0"]
-                 [datascript "0.13.3"]
                  [hiccup "1.0.5"]
                  [markdown-clj "0.9.82"]
                  [environ "1.0.1"]
@@ -34,7 +37,7 @@
   :clean-targets ^{:protect false} [:target-path
                                     [:cljsbuild :builds :app :compiler :output-dir]
                                     [:cljsbuild :builds :app :compiler :output-to]]
-  :source-paths ["src/clj" "src/cljc"]
+  :source-paths ["src/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
 
   :minify-assets
@@ -42,10 +45,10 @@
    {"resources/public/css/site.min.css" "resources/public/css/site.css"
     "resources/public/css/semantic.min.css" "resources/public/css/semantic.css"}}
 
-  :cljsbuild {:builds {:app {:source-paths ["src/cljs" "src/cljc"]
+  :cljsbuild {:builds {:app {:source-paths ["src/cljs"]
                              :compiler {:output-to "target/cljsbuild/public/js/app.js"
                                         :output-dir "target/cljsbuild/public/js/out"
-                                        :asset-path "js/out"
+                                        :asset-path "/js/out"
                                         :optimizations :none
                                         :pretty-print true}}}}
   :profiles {:dev {:repl-options {:init-ns brass-tacks.repl}
